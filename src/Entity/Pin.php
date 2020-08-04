@@ -1,13 +1,22 @@
 <?php
+/*
+ * @Author: your name
+ * @Date: 2020-08-04 23:28:14
+ * @LastEditTime: 2020-08-04 23:31:16
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /cours-symfony-container/src/Entity/Pin.php
+ */
 
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PinRepository")
+ * @ORM\Table(name="pins")
  */
-class Post
+class Pin
 {
     /**
      * @ORM\Id()
@@ -22,9 +31,9 @@ class Post
     private $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", length=255)
      */
-    private $content;
+    private $description;
 
     public function getId(): ?int
     {
@@ -43,14 +52,14 @@ class Post
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getDescription(): ?string
     {
-        return $this->content;
+        return $this->description;
     }
 
-    public function setContent(string $content): self
+    public function setDescription(string $description): self
     {
-        $this->content = $content;
+        $this->description = $description;
 
         return $this;
     }
