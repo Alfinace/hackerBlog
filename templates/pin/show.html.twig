@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+{% block title %}{{ pin.title }} | {% endblock %}
+
+{% block body %}
+    <div class="container">
+    <div class="card border-primary">
+      <img class="card-img-top" src="holder.js/100px180/" alt="">
+      <div class="card-body">
+        <h4 class="card-title">{{ pin.title }}</h4>
+        <p class="card-text">{{ pin.description }}</p>
+      </div>
+    </div>
+    </div>
+{% endblock %}

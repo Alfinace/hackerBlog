@@ -4,12 +4,13 @@
 
 {% block body %}
     <div class="container">
+    <h3 class="text-center">{{ plusiraze(pins|length ,"Pin","Pins") }}</h3>
         <div class="row">
             {% for pin in pins %}
                 <div class="col-sm-4 mb-3">
                     <div class="card border-primary">
                       <div class="card-body">
-                        <h4 class="card-title">{{ pin.title }}</h4>
+                        <h4 class="card-title"><a href="{{ path('app_show_pin',{'id':pin.id}) }}">{{ pin.title }}</a></h4>
                         <p class="card-text small">{{ pin.description }}</p>
                       </div>
                     </div>
