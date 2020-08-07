@@ -12,6 +12,7 @@
                       <div class="card-body">
                         <h4 class="card-title"><a href="{{ path('app_show_pin',{'id':pin.id}) }}">{{ pin.title }}</a></h4>
                         <p class="card-text small">{{ pin.description }}</p>
+                        <p class="text-muted font-italic" style="font-size:10px">Submitted: {{ pin.createdAt|date }}</p>
                       </div>
                     </div>
                 </div>
