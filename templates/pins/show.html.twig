@@ -8,6 +8,8 @@
       <div class="card-body">
         <h4 class="card-title">{{ pin.title }}</h4>
         <p class="card-text">{{ pin.description }}</p>
+        <a href="{{ path('app_edit_pin',{id :pin.id}) }}">Edit</a>
+        <a href="{{ path('app_delete_pin',{id :pin.id}) }}">Delete</a>
       </div>
     </div>
     </div>

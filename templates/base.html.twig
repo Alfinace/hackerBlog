@@ -10,13 +10,16 @@
     <body>
     <header>
      <nav class="navbar navbar-expand navbar-light bg-faded shadow mb-5">
-         <a class="navbar-brand" href="#">Navbar</a>
+         <a class="navbar-brand" href="#">Pinshap<span class="sr-only">(current)</span></a>
          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+         <li class="nav-item active">
+                 <a class="nav-link" href="{{ path('app_index_pin') }}">Home </a>
+             </li>
          </ul>
          <div class=" my-2 my-lg-0">
            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
              <li class="nav-item active">
-                 <a class="nav-link" href="#">PROFILE <span class="sr-only">(current)</span></a>
+                 <a class="nav-link" href="{{ path('app_create_pin') }}">New </a>
              </li>
              <li class="nav-item">
                  <a class="nav-link" href="#">Se connecter</a>
