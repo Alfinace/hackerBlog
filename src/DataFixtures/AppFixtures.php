@@ -1,4 +1,12 @@
 <?php
+/*
+ * @Author: your name
+ * @Date: 2020-08-06 14:13:44
+ * @LastEditTime: 2020-08-07 22:49:59
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /cours-symfony-container/src/DataFixtures/AppFixtures.php
+ */
 namespace App\DataFixtures;
 
 use App\Entity\Pin;
@@ -14,7 +22,7 @@ class AppFixtures extends Fixture
         for ($i=0; $i < 50; $i++) { 
             $pin = new Pin;
             $pin->setTitle($faker->name);
-            $pin->setDescription($faker->paragraph($nbSentences = 20, $variableNbSentences = true));
+            $pin->setDescription($faker->paragraph($nbSentences = 8 , $variableNbSentences = true));
             $manager->persist($pin);
         }
 

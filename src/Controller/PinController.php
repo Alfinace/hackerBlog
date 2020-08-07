@@ -2,10 +2,10 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-07 21:00:04
+ * @LastEditTime: 2020-08-07 23:37:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: /cours-symfony-container/src/Controller/PinController.php
+ * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
  */
 
 namespace App\Controller;
@@ -25,7 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PinController extends AbstractController
 {
     /**
-     * @Route("/", name="app_index_pin")
+     * @Route("/pins", name="app_index_pin")
      * 
      * @param PinRepository $pinRepository
      * @return Response
@@ -38,19 +38,18 @@ class PinController extends AbstractController
     }
     
     /**
-     * @Route("/show/{id<[0-9]+>}", name="app_show_pin",methods={"GET"})
+     * @Route("/pins/show/{id<[0-9]+>}", name="app_show_pin",methods={"GET"})
      *
      * @param Pin $pin
      * @return Response
      */
     public function show(Pin $pin):Response
     {
-        
         return $this->render('pins/show.html.twig',compact("pin"));
     }
 
     /**
-     * @Route("/create", name="app_create_pin",methods={"GET","POST"})
+     * @Route("/pins/create", name="app_create_pin",methods={"GET","POST"})
      *
      * @return Response
      */
@@ -72,7 +71,7 @@ class PinController extends AbstractController
     }
 
     /**
-     * @Route("/pin/{id<[0-9]+>}/edit", name="app_edit_pin", methods={"GET","PUT"})
+     * @Route("/pins/{id<[0-9]+>}/edit", name="app_edit_pin", methods={"GET","PUT"})
      *
      * @param Request $request
      * @param Pin $pin
@@ -96,7 +95,7 @@ class PinController extends AbstractController
         ]);
     }
 /**
- * @Route("pin/{id<[0-9]+>}/delete", name="app_delete_pin", methods={"GET","DELETE"})
+ * @Route("/pins/{id<[0-9]+>}", name="app_delete_pin", methods={"GET","DELETE"})
  *
  * @param Pin $pin
  * @param EntityManagerInterface $em
