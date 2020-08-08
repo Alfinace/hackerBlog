@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-07 23:37:41
+ * @LastEditTime: 2020-08-08 17:04:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -62,6 +62,10 @@ class PinController extends AbstractController
             //$pin = $form->getData(); 
             $em->persist($pin);
             $em->flush(); 
+            $this->addFlash(
+                'success',
+                'Pin successfully created'
+            );
         return $this->redirectToRoute('app_index_pin');
         }
 
@@ -87,6 +91,10 @@ class PinController extends AbstractController
          if ($form->isSubmitted() && $form->isValid()) { 
             $em->persist($pin);
             $em->flush();
+            $this->addFlash(
+                'success',
+                'Pin successfully updated'
+            );
             return $this->redirectToRoute('app_index_pin');
          }
 
@@ -103,9 +111,14 @@ class PinController extends AbstractController
  */
     public function remove(Request $request, Pin $pin, EntityManagerInterface $em)
     {
+        $title=$pin->getTitle();
         if ($this->isCsrfTokenValid('pin.delete'.$pin->getId(),$request->request->get('csrf_token'))) {
             $em->remove($pin);
             $em->flush();
+            $this->addFlash(
+                'danger',
+                'Pin "'.$title.'" deleted'
+            );
         }
         return $this->redirectToRoute('app_index_pin');
     }

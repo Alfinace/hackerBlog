@@ -1,8 +1,9 @@
-{% extends "base.html.twig" %}
+{% extends "layouts/base.html.twig" %}
 {% block title 'New pin' %}
 
 {% block body %}
-    <div class="container">
-    <h3>Create Pin</h3>
-    {{ include('pins/_form.html.twig',{'form':form}) }}
+	<div class="container">
+		<h3>Create Pin</h3>
+		{{ include('pins/_form.html.twig',{'form':form}) }}
+	</div>
 {% endblock %}
