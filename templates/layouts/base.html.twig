@@ -11,30 +11,13 @@
 		{% endblock %}
 	</head>
 	<body>
-		<header>
-			<nav class="navbar navbar-expand navbar-light bg-faded shadow">
-				<a class="navbar-brand" href="#">Pinshap<span class="sr-only">(current)</span></a>
-				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-					<li class="nav-item active">
-						<a class="nav-link" href="{{ path('app_index_pin') }}">Home</a>
-					</li>
-				</ul>
-				<div class=" my-2 my-lg-0">
-					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="{{ path('app_create_pin') }}">New</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Se connecter</a>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		</header>
+
 		{% include "layouts/partials/_flash_message.html.twig" %}
-		<div class="mb-5"> 
-	    	{% block body %}{% endblock %}
-		</div>
+		{% include "layouts/partials/_nav.html.twig" %}
+		<main role="main" class="container">
+			{% block body %}{% endblock %}
+		</main>
+		{% include "layouts/partials/_footer.html.twig" %}
 		{% block javascripts %}
 		<script src="{{ asset('app/app.js') }}"></script>
 		<script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>

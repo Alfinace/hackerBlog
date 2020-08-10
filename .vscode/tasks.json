@@ -4,9 +4,12 @@
         {
             "label": "Start Server",
             "type": "process",
-            "command": "php -S localhost:8080 -t ${workspaceFolder}/public",
+            "command": "php -S localhost:8080 ",
             "isBackground": true,
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "problemMatcher": []
         },
         {

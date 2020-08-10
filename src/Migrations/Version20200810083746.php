@@ -1,12 +1,4 @@
 <?php
-/*
- * @Author: your name
- * @Date: 2020-08-06 14:13:44
- * @LastEditTime: 2020-08-10 11:17:15
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: /cours-symfony-container/src/Migrations/Version20200804203238.php
- */
 
 declare(strict_types=1);
 
@@ -18,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200804203238 extends AbstractMigration
+final class Version20200810083746 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -30,7 +22,7 @@ final class Version20200804203238 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE pins (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE pins ADD image_name VARCHAR(255) DEFAULT NULL, CHANGE created_at created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, CHANGE updated_at updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -38,6 +30,6 @@ final class Version20200804203238 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE pins');
+        $this->addSql('ALTER TABLE pins DROP image_name, CHANGE created_at created_at DATETIME DEFAULT \'current_timestamp()\' NOT NULL, CHANGE updated_at updated_at DATETIME DEFAULT \'current_timestamp()\' NOT NULL');
     }
 }

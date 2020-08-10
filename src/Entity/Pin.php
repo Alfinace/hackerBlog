@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:28:14
- * @LastEditTime: 2020-08-06 17:52:25
+ * @LastEditTime: 2020-08-10 11:37:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Entity/Pin.php
@@ -12,6 +12,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PinRepository")
@@ -31,13 +32,22 @@ class Pin
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=5)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=20)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageName;
 
 
     public function getId(): ?int
@@ -50,7 +60,7 @@ class Pin
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -62,9 +72,21 @@ class Pin
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(string $imageName): self
+    {
+        $this->imageName = $imageName;
 
         return $this;
     }

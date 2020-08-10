@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-08 17:04:36
+ * @LastEditTime: 2020-08-08 17:34:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -12,14 +12,11 @@ namespace App\Controller;
 
 use App\Entity\Pin;
 use App\Form\PinType;
-use Faker\Provider\ar_JO\Text;
 use App\Repository\PinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PinController extends AbstractController
@@ -58,6 +55,7 @@ class PinController extends AbstractController
         $pin = new Pin;
         $form = $this->createForm(PinType::class, $pin);
         $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             //$pin = $form->getData(); 
             $em->persist($pin);

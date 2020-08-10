@@ -3,7 +3,11 @@
 
 {% block body %}
 	<div class="container">
-		<h3>Create Pin</h3>
-		{{ include('pins/_form.html.twig',{'form':form}) }}
+		<div class="row">
+			<div class="col-xl-6 mx-auto">
+					<h3>Create Pin</h3>
+					{{ include('pins/_form.html.twig',{'form':form}) }}
+				</div>
+		</div>
 	</div>
 {% endblock %}
