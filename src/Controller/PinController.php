@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-08 17:34:18
+ * @LastEditTime: 2020-08-11 18:41:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -13,6 +13,7 @@ namespace App\Controller;
 use App\Entity\Pin;
 use App\Form\PinType;
 use App\Repository\PinRepository;
+use App\Service\ImageUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PinController extends AbstractController
 {
     /**
-     * @Route("/pins", name="app_index_pin")
+     * @Route("/", name="app_index_pin")
      * 
      * @param PinRepository $pinRepository
      * @return Response
@@ -50,13 +51,18 @@ class PinController extends AbstractController
      *
      * @return Response
      */
-    public function create(Request $request,EntityManagerInterface $em):Response
+    public function create(Request $request,EntityManagerInterface $em, ImageUploader $imageUploader):Response
     {
-        $pin = new Pin;
-        $form = $this->createForm(PinType::class, $pin);
+        $pin = new Pin();
+        $form = $this->createForm(PinType::class,$pin);
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid()) {
+              $imageFile = ($request->files->get('pin'))['imageName'];
+              if ($imageUploader) {
+                  $imageFileName = $imageUploader->upload($imageFile);
+                  $pin->setImageName($imageFileName);
+              }
+      
             //$pin = $form->getData(); 
             $em->persist($pin);
             $em->flush(); 
@@ -80,13 +86,19 @@ class PinController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
     */
-    public function edit(Request $request, Pin $pin, EntityManagerInterface $em ):Response
+    public function edit(Request $request, Pin $pin, EntityManagerInterface $em, ImageUploader $imageUploader ):Response
     {
         $form = $this->createForm(PinType::class, $pin,[
             'method' =>'PUT'
         ]);
         $form->handleRequest($request);
          if ($form->isSubmitted() && $form->isValid()) { 
+            $imageFile = ($request->files->get('pin'))['imageName'];
+            if (!is_null($imageFile)) {
+                $imageFileName = $imageUploader->upload($imageFile);
+                $pin->setImageName($imageFileName);
+            }
+    
             $em->persist($pin);
             $em->flush();
             $this->addFlash(

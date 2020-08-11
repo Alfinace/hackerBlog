@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:28:14
- * @LastEditTime: 2020-08-10 11:37:37
+ * @LastEditTime: 2020-08-10 17:35:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Entity/Pin.php
@@ -84,7 +84,7 @@ class Pin
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): self
+    public function setImageName(?string $imageName): self
     {
         $this->imageName = $imageName;
 

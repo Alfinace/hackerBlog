@@ -1,24 +1,28 @@
 {% extends "layouts/base.html.twig" %}
 
-{% block title %}Liste de pin{% endblock %}
+{% block title %}Liste de pin
+{% endblock %}
 {% block body %}
 	<div class="container">
 		<h3 class="text-center">{{ plusiraze(pins|length ,"Pin","Pins") }}</h3>
-		<div class="row">
-			{% for pin in pins %}
-				<div class="col-sm-3 mb-3">
-					<div class="card border-primary">
-						<div class="card-body">
-							<h4 class="card-title">
-								<a href="{{ path('app_show_pin',{'id':pin.id}) }}">{{ pin.title }}</a>
-							</h4>
-							<p class="card-text small">{{ pin.description | shortly }}</p>
+		{% for row in pins | batch(4) %}
+			<div class="row mt-3">
+				{% for pin in row %}
+					<div class="col-sm-3">
+						<article class="bg-light rounded shadow">
+							<div class="mw-100 overflow-hidden">
+								<a href="{{ path('app_show_pin',{'id':pin.id}) }}">
+									<img class="w-100 img" src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="200px" height="200px">
+								</a>
+							</div>
+							<a class="h4" href="{{ path('app_show_pin',{'id':pin.id}) }}">{{ pin.title }}</a>
+							<p class="card-text ">{{ pin.description | shortly }}</p>
 							<p class="text-muted font-italic" style="font-size:10px">Submitted:
 								{{ pin.createdAt|date }}</p>
-						</div>
+						</article>
 					</div>
-				</div>
-			{% endfor %}
-		</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
 	</div>
 {% endblock %}

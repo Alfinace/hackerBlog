@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-06 14:54:30
- * @LastEditTime: 2020-08-10 11:15:39
+ * @LastEditTime: 2020-08-11 17:43:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Twig/AppExtension.php
@@ -44,8 +44,8 @@ class AppExtension extends AbstractExtension
     {
         $tabText = explode(" ",$text);
         $tab =[];
-        if(count($tabText)>10){
-            for ($i=0; $i < 10 ; $i++) { 
+        if(count($tabText)>7){
+            for ($i=0; $i < 7 ; $i++) { 
                 $tab[] = $tabText[$i];
              }
              $text= implode(" ",$tab).' ...';
