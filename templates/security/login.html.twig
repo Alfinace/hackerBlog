@@ -1,0 +1,31 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-4 mx-auto bg-light rounded shadow h-400 ">
+            <h3 class="text-center mt-5">Authentication system</h3>
+                    {% if error %}
+						<div class="alert alert-danger mt-5 mb-5">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+				<form method="post" class="mt-5 ">
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control" value="{{last_username}}"  name="email" id="email"  placeholder="Your email" required autofocus>
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" name="password" id="password" placeholder="Your password" >
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token("authenticate") }}">
+                    
+				</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

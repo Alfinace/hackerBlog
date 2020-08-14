@@ -12,17 +12,19 @@
 					<h4 class="text-center text-uppercase mb-3 mt-3">{{ pin.title }}</h4>
 					<img class="w-100 " src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="400px" height="400px">
 					<div class="pl-2 mb-3 text-center">
-						<div class="col-12">
+						<div class="col-12 mt-5">
 							<p class=" text-left">{{ pin.description }}</p>
 						</div>
-						<div class="row">
-							<div class="col-6">
-								<a href="{{ path('app_edit_pin',{id :pin.id}) }}" class="btn w-50 btn-primary">Edit</a>
+						{% if app.user == pin.user %}
+							<div class="row">
+								<div class="col-lg-6">
+									<a href="{{ path('app_edit_pin',{id :pin.id}) }}" class="btn w-50 btn-primary">Edit</a>
+								</div>
+								<div class="col-lg-6">
+									<a href="#" class="btn w-50 btn-danger" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">Delete</a>
+								</div>
 							</div>
-							<div class="col-6">
-								<a href="#" class="btn w-50 btn-danger" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">Delete</a>
-							</div>
-						</div>
+						{% endif %}
 					</div>
 					<br>
 				</article>

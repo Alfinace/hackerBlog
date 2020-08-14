@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-14 21:52:43
+ * @LastEditTime: 2020-08-15 00:27:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -12,14 +12,15 @@ namespace App\Controller;
 
 use App\Entity\Pin;
 use App\Form\PinType;
-use App\Repository\PinRepository;
 use App\Service\ImageUploader;
+use App\Repository\PinRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 
 class PinController extends AbstractController
 {
@@ -54,6 +55,7 @@ class PinController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $em, ImageUploader $imageUploader): Response
     {
+       
         $pin = new Pin();
         $form = $this->createForm(PinType::class, $pin);
         $form->handleRequest($request);
@@ -64,6 +66,7 @@ class PinController extends AbstractController
                 $pin->setImageName($imageFileName);
             }
             //$pin = $form->getData(); 
+            $pin->setUser($this->getUser());
             $em->persist($pin);
             $em->flush();
             $this->addFlash(
@@ -88,6 +91,14 @@ class PinController extends AbstractController
      */
     public function edit(PinRepository $pinRepository, Request $request, Pin $pin, EntityManagerInterface $em, ImageUploader $imageUploader, Filesystem $filesystem): Response
     {
+    
+        if ($this->getUser() != $pin->getUser()) {
+            $this->addFlash(
+            'warning',
+            'Attention, You \'re baned to make this action'
+            );
+           return $this->redirectToRoute('app_index_pin');
+        }
         $pinOld = $pinRepository->find($pin->getId());
         $form = $this->createForm(PinType::class, $pin, [
             'method' => 'PUT'
