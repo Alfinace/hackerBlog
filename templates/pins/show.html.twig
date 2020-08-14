@@ -6,10 +6,28 @@
 
 {% block body %}
 	<div class="container">
-		<h4 class="card-title">{{ pin.title }}</h4>
-		<p class="card-text">{{ pin.description }}</p>
-		<a href="{{ path('app_edit_pin',{id :pin.id}) }}">Edit</a>
-		<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">Delete</a>
+		<div class="row">
+			<div class="col-sm-7 mx-auto">
+				<article class=" rounded shadow">
+					<h4 class="text-center text-uppercase mb-3 mt-3">{{ pin.title }}</h4>
+					<img class="w-100 " src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="400px" height="400px">
+					<div class="pl-2 mb-3 text-center">
+						<div class="col-12">
+							<p class=" text-left">{{ pin.description }}</p>
+						</div>
+						<div class="row">
+							<div class="col-6">
+								<a href="{{ path('app_edit_pin',{id :pin.id}) }}" class="btn w-50 btn-primary">Edit</a>
+							</div>
+							<div class="col-6">
+								<a href="#" class="btn w-50 btn-danger" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">Delete</a>
+							</div>
+						</div>
+					</div>
+					<br>
+				</article>
+			</div>
+		</div>
 	</div>
 	<form id="js-form-delete-pin" action="{{ path('app_delete_pin',{id :pin.id}) }}" method="post" style='display="none"'>
 		<input type="hidden" name="csrf_token" value="{{ csrf_token('pin.delete'~ pin.id) }}">

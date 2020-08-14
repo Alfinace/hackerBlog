@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-06 14:54:30
- * @LastEditTime: 2020-08-11 17:43:30
+ * @LastEditTime: 2020-08-12 00:04:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Twig/AppExtension.php
@@ -42,10 +42,11 @@ class AppExtension extends AbstractExtension
 
     public function sortlyFunction(string $text):string
     {
+        $nbrRandom =rand(2,5);
         $tabText = explode(" ",$text);
         $tab =[];
-        if(count($tabText)>7){
-            for ($i=0; $i < 7 ; $i++) { 
+        if(count($tabText)>$nbrRandom){
+            for ($i=0; $i < $nbrRandom ; $i++) { 
                 $tab[] = $tabText[$i];
              }
              $text= implode(" ",$tab).' ...';
