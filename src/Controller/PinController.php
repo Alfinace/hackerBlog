@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-15 00:27:55
+ * @LastEditTime: 2020-08-15 14:12:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -55,7 +55,13 @@ class PinController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $em, ImageUploader $imageUploader): Response
     {
-       
+       if (!$this->getUser()) {
+           $this->addFlash(
+           'warning',
+           'Connectez-vous d\'abord'
+           );
+           return $this->redirectToRoute('app_login');
+       }
         $pin = new Pin();
         $form = $this->createForm(PinType::class, $pin);
         $form->handleRequest($request);

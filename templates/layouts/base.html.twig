@@ -15,14 +15,18 @@
 
 		{% include "layouts/partials/_flash_message.html.twig" %}
 		{% include "layouts/partials/_nav.html.twig" %}
-		<main role="main" class="container">
-			{% block body %}{% endblock %}
-		</main>
-		{% include "layouts/partials/_footer.html.twig" %}
-		{% block javascripts %}
-		<script src="{{ asset('app/app.js') }}"></script>
-		<script src="{{ asset('app/jquery.js') }}"></script>
-		<script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
-		{% endblock %}
-	</body>
-</html>
+		<main role="main" class="container"> {% block body %}{% endblock %}
+			</main>
+			{% include "layouts/partials/_footer.html.twig" %}
+			{% block javascripts %}
+				<script src="{{ asset('app/app.js') }}"></script>
+				<script src="{{ asset('app/jquery.js') }}"></script>
+				<script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
+				<script>
+					$(document).ready(() => {
+						
+						})
+				</script>
+			{% endblock %}
+		</body>
+	</html>

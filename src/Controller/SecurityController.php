@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-14 22:29:46
- * @LastEditTime: 2020-08-15 01:28:46
+ * @LastEditTime: 2020-08-15 14:26:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/SecurityController.php
@@ -68,6 +68,7 @@ class SecurityController extends AbstractController
        
        if ($form->isSubmitted() && $form->isValid()) { 
            $user->setPassword($this->passwordEncoder->encodePassword($user,$user->getPassword()));
+        $user->setProfileImage('default.png');
            $this->em->persist($user);
            $this->em->flush();
            return $this->redirectToRoute('app_login');

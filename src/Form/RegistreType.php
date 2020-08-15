@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-15 00:34:05
- * @LastEditTime: 2020-08-15 01:08:40
+ * @LastEditTime: 2020-08-15 14:20:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Form/RegistreType.php
@@ -23,9 +23,7 @@ class RegistreType extends AbstractType
         $builder
             ->add('email')
             ->add('password',PasswordType::class)
-            ->add('confirm_password',PasswordType::class)
-            ->add('profile_image')
-        ;
+            ->add('confirm_password',PasswordType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

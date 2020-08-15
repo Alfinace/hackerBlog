@@ -16,13 +16,9 @@
 							<p class=" text-left">{{ pin.description }}</p>
 						</div>
 						{% if app.user == pin.user %}
-							<div class="row">
-								<div class="col-lg-6">
-									<a href="{{ path('app_edit_pin',{id :pin.id}) }}" class="btn w-50 btn-primary">Edit</a>
-								</div>
-								<div class="col-lg-6">
-									<a href="#" class="btn w-50 btn-danger" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">Delete</a>
-								</div>
+							<div class="text-left">
+								<a href="{{ path('app_edit_pin',{id :pin.id}) }}">Edit</a>|
+								<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">Delete</a>
 							</div>
 						{% endif %}
 					</div>
