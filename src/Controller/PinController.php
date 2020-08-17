@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-15 14:12:23
+ * @LastEditTime: 2020-08-17 14:22:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -11,9 +11,11 @@
 namespace App\Controller;
 
 use App\Entity\Pin;
+use App\Entity\Like;
 use App\Form\PinType;
 use App\Service\ImageUploader;
 use App\Repository\PinRepository;
+use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -154,5 +156,31 @@ class PinController extends AbstractController
             );
         }
         return $this->redirectToRoute('app_index_pin');
+    }
+
+    /**
+     * @Route("/pins/{id<[0-9]+>}/like", name="app_delete_like")
+     * set our remove  like
+     *
+     * @param Pin $pin
+     * @return Response
+     */
+    public function Like(Pin $pin, LikeRepository $likeRepository, EntityManagerInterface $em):Response 
+    {
+    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+      foreach ($pin->getLikes() as $like) {
+         if ($like->getUser() === $this->getUser()) {
+            $likeRepository->deleteLikeById($like->getId());
+            return $this->redirectToRoute('app_index_pin');
+         }
+      }
+         $like = new Like;
+         $like->setPin($pin)
+            ->setUser($this->getUser())
+            ->setCreatedAt( new \DateTime)
+            ->setUpdatedAt( new \DateTime);
+        $em->persist($like);
+        $em->flush();
+      return $this->redirectToRoute('app_index_pin');
     }
 }
