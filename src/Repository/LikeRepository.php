@@ -47,4 +47,14 @@ class LikeRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function deleteLikeById($id): bool
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            DELETE FROM likes
+            WHERE likes.id = :id';
+        $stmt = $conn->prepare($sql);
+        return ( $stmt->execute(['id' => $id])) ? true :false;
+    }
 }
