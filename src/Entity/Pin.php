@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:28:14
- * @LastEditTime: 2020-08-10 17:35:35
+ * @LastEditTime: 2020-08-17 14:26:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Entity/Pin.php
@@ -151,5 +151,17 @@ class Pin
         return $this;
     }
 
-
+    /**
+     * Undocumented function
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function isLikedUser(User $user): bool
+    {
+        foreach( $this->likes as $like){
+            if ($like->getUser() === $user) return true;
+        }
+        return false;
+    }
 }
