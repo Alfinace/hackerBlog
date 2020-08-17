@@ -11,6 +11,8 @@
 namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,6 +55,16 @@ class Pin
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="pins")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="pin")
+     */
+    private $likes;
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -104,6 +116,37 @@ class Pin
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setPin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getPin() === $this) {
+                $like->setPin(null);
+            }
+        }
 
         return $this;
     }
