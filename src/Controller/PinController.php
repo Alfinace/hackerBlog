@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-17 14:22:50
+ * @LastEditTime: 2020-08-19 00:28:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -171,7 +171,8 @@ class PinController extends AbstractController
       foreach ($pin->getLikes() as $like) {
          if ($like->getUser() === $this->getUser()) {
             $likeRepository->deleteLikeById($like->getId());
-            return $this->redirectToRoute('app_index_pin');
+            $LikeCount = count($pin->getLikes() );
+            return $this->json(["count"=>$LikeCount,'status'=>'like'],200);
          }
       }
          $like = new Like;
@@ -181,6 +182,7 @@ class PinController extends AbstractController
             ->setUpdatedAt( new \DateTime);
         $em->persist($like);
         $em->flush();
-      return $this->redirectToRoute('app_index_pin');
+        $LikeCount = count($pin->getLikes());
+        return $this->json(["count"=>$LikeCount,'status'=>'dislike'],200);
     }
 }

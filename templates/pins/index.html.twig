@@ -26,7 +26,7 @@
 							<hr>
 							<span class="ml-3 text-primary ">
 								{{ pin.likes | length }} 
-								<a href="{{ path('app_delete_like',{id : pin.id}) }}">
+								<a href="{{ path('app_delete_like',{id : pin.id}) }}" id="linkLike">
 								{% if app.user and pin.isLikedUser(app.user) %}
 								<span class="font-weight-bolder">
 									<i class="fas fa-thumbs-down fa-lg fa-fw text-danger "></i>
@@ -49,5 +49,28 @@
 			</div>
 		{% endfor %}
 	</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script >
+	$(document).ready(()=>{
+		$("a").on("click",function(event){
+			event.preventDefault();
+			console.log(this.href);
+			$.ajaxSetup({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+				});
+			$.ajax({
+					url:this.href,
+					method:"POST",
+					success:function(data){
+						console.log(data);
+					}
+			})
+		});
+	});
+</script>
 {% endblock %}
 
