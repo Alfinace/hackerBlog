@@ -4,7 +4,6 @@
 {% endblock %}
 {% block body %}
 	<div class="container">
-
 		<h3 class="text-center">{{ plusiraze(pins|length ,"Pin","Pins") }}</h3>
 		{% for row in pins | batch(4) %}
 			<div class="row mt-3">
@@ -13,7 +12,7 @@
 						<article class="bg-light rounded shadow" style="font-size:10px">
 							<div class="mw-100 overflow-hidden">
 								<a href="{{ path('app_show_pin',{'id':pin.id}) }}">
-									<img class="w-100 img" src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="200px" height="200px">
+									<img class="w-100 img" src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="200px" height="auto">
 								</a>
 							</div>
 							<a class="h4" href="{{ path('app_show_pin',{'id':pin.id}) }}">{{ pin.title }}</a>
@@ -26,21 +25,25 @@
 							<hr>
 							<span class="ml-3 text-primary ">
 								{{ pin.likes | length }} 
-								<a href="{{ path('app_delete_like',{id : pin.id}) }}" id="linkLike">
+								{% if app.user %}
+									<a href="{{ path('app_delete_like',{id : pin.id}) }}" id="linkLike">
+								{% endif %}
 								{% if app.user and pin.isLikedUser(app.user) %}
-								<span class="font-weight-bolder">
-									<i class="fas fa-thumbs-down fa-lg fa-fw text-danger "></i>
-									Dislike
-								</span>
+									<span class="font-weight-bolder">
+										<i class="fas fa-thumbs-down fa-lg fa-fw text-danger "></i>
+										Dislike
+									</span>
 								{% else %}
 									<i class="fas fa-thumbs-up fa-lg fa-fw"></i>
 									Like
 								{% endif %}
-								</a>
+								{% if app.user %}
+									</a>
+								{% endif %}
 							</span>
 							<span class="float-right">
 								<i class="fas fa-comment fa-lg fa-fw"></i>
-								{{ pin.likes | length }} Comments	
+								{{ pin.comments | length }} Comments	
 							</span>
 							<hr>
 						</article>
@@ -54,19 +57,19 @@
 {{ parent() }}
 <script >
 	$(document).ready(()=>{
-		$("a").on("click",function(event){
-			event.preventDefault();
-			console.log(this.href);
+		$("#linkLikhe").on("click",function(event){
+			//event.preventDefault();
 			$.ajaxSetup({
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					}
 				});
+				var a = this.href;
 			$.ajax({
 					url:this.href,
 					method:"POST",
 					success:function(data){
-						console.log(data);
+						console.log(ae);
 					}
 			})
 		});

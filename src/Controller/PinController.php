@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-19 00:28:14
+ * @LastEditTime: 2020-08-19 21:55:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -10,6 +10,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Pin;
 use App\Entity\Like;
 use App\Form\PinType;
@@ -165,16 +166,21 @@ class PinController extends AbstractController
      * @param Pin $pin
      * @return Response
      */
-    public function Like(Pin $pin, LikeRepository $likeRepository, EntityManagerInterface $em):Response 
+    public function Like(Pin $pin, LikeRepository $likeRepository, EntityManagerInterface $em,Request $request):Response 
     {
-    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-      foreach ($pin->getLikes() as $like) {
-         if ($like->getUser() === $this->getUser()) {
-            $likeRepository->deleteLikeById($like->getId());
-            $LikeCount = count($pin->getLikes() );
-            return $this->json(["count"=>$LikeCount,'status'=>'like'],200);
-         }
-      }
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_index_pin');
+        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        foreach ($pin->getLikes() as $like) {
+            if ($like->getUser() === $this->getUser()) {
+                $likeRepository->deleteLikeById($like->getId());
+                // $LikeCount = count($pin->getLikes() );
+                // return $this->json(["count"=>$LikeCount,'status'=>'like'],200);
+                return $this->redirectToRoute('app_show_pin',['id'=>$pin->getId()]);
+            }
+        }
          $like = new Like;
          $like->setPin($pin)
             ->setUser($this->getUser())
@@ -182,7 +188,35 @@ class PinController extends AbstractController
             ->setUpdatedAt( new \DateTime);
         $em->persist($like);
         $em->flush();
-        $LikeCount = count($pin->getLikes());
-        return $this->json(["count"=>$LikeCount,'status'=>'dislike'],200);
+        
+        // $LikeCount = count($pin->getLikes());
+        // return $this->json(["count"=>$LikeCount,'status'=>'dislike'],200);
+        return $this->redirectToRoute('app_show_pin',['id'=>$pin->getId()]);
+    }
+
+    /**
+     * @Route("/pins/{id<[0-9]+>}/comment", name="app_comment_pin")
+     * Comment pin
+     *
+     * @param Pin $pin
+     * @param Request $request
+     * @return Response
+     */
+    public function Comment(Pin $pin,Request $request,EntityManagerInterface $em):Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        $comment = new Comment;
+        $comment->setUser($this->getUser())
+                ->setPin($pin)
+                ->setContent($request->request->get('comment'))
+                ->setCreatedAt( new \DateTime)
+                ->setUpdatedAt( new \DateTime);
+        
+        $em->persist($comment);
+        $em->flush();
+
+        return $this->redirectToRoute('app_show_pin',['id'=>$pin->getId()]);
     }
 }

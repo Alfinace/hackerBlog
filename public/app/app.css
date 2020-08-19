@@ -7,6 +7,10 @@
     transform: scale(1);
 
 }
+li>.nav-link{
+    color: #fff;
+    font-weight: bolder;
+}
 
 .h-300{
     height: 300px;

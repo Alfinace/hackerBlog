@@ -7,22 +7,65 @@
 {% block body %}
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-7 mx-auto">
+			<div class="col-lg-12 mx-auto">
 				<article class=" rounded shadow">
 					<h4 class="text-center text-uppercase mb-3 mt-3">{{ pin.title }}</h4>
-					<img class="w-100 " src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="400px" height="400px">
+					{% if app.user == pin.user %}
+						<span class="float-right">
+							<a href="{{ path('app_edit_pin',{id :pin.id}) }}">
+								<i class="fas fa-edit fa-sm fa-fw"></i>
+							</a>|
+							<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">
+								<i class="fas fa-trash fa-sm fa-fw"></i>
+							</a>
+						</span>
+					{% endif %}
+					<img class="w-100 " src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="400px" height="auto">
 					<div class="pl-2 mb-3 text-center">
 						<div class="col-12 mt-5">
 							<p class=" text-left">{{ pin.description }}</p>
-						</div>
-						{% if app.user == pin.user %}
-							<div class="text-left">
-								<a href="{{ path('app_edit_pin',{id :pin.id}) }}">Edit</a>|
-								<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.querySelector('#js-form-delete-pin').submit()">Delete</a>
+							<div class="">
+								<span class="float-left text-primary ">
+									{{ pin.likes | length }}
+									{% if app.user %}
+										<a href="{{ path('app_delete_like',{id : pin.id}) }}">
+										{% endif %}
+										{% if app.user and pin.isLikedUser(app.user) %}
+											<span class="font-weight-bolder">
+												<i class="fas fa-thumbs-down fa-lg fa-fw text-danger "></i>
+											</span>
+										{% else %}
+											<i class="fas fa-thumbs-up fa-lg fa-fw"></i>
+										{% endif %}
+										{% if app.user %}
+										</a>
+									{% endif %}
+								</span>
+								<span class="float-right">
+									<i class="fas fa-comment fa-lg fa-fw"></i>
+									{{ pin.comments | length }}
+									Comments
+								</span>
 							</div>
-						{% endif %}
+							<hr>
+						</div>
 					</div>
 					<br>
+					<form action="{{ path('app_comment_pin',{id : pin.id}) }}" method="post">
+						<div class="form-group container">
+							<textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+							<button type="submit" class="  btn mb-3 mt-3 btn-primary">Comment</button>
+						</div>
+					</form>
+					<hr>
+					{% for comment in pin.comments %}
+						<div class="container">
+							<span class="text-muted">{{comment.user.email }}</span>
+							<p>{{ comment.content }}</p>
+							{{ comment.createdAt | date() }}
+						</div>
+						<hr>
+					{% endfor %}
 				</article>
 			</div>
 		</div>

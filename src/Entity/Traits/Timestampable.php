@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-06 17:46:54
- * @LastEditTime: 2020-08-06 17:51:32
+ * @LastEditTime: 2020-08-19 23:54:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Traits/Timestampable.php
@@ -56,7 +56,7 @@ trait Timestampable
      */
     public function updateTimestamps()
     {
-        if ($this->getCreatedAt()=== null) {
+        if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new \DateTimeImmutable);
         }
         $this->setUpdatedAt(new \DateTimeImmutable);
