@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-19 21:55:31
+ * @LastEditTime: 2020-08-23 15:36:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -17,6 +17,7 @@ use App\Form\PinType;
 use App\Service\ImageUploader;
 use App\Repository\PinRepository;
 use App\Repository\LikeRepository;
+use App\Service\LikeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -166,32 +167,20 @@ class PinController extends AbstractController
      * @param Pin $pin
      * @return Response
      */
-    public function Like(Pin $pin, LikeRepository $likeRepository, EntityManagerInterface $em,Request $request):Response 
+    public function Like(Pin $pin,LikeService $likeService):Response 
     {
 
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_index_pin');
         }
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        foreach ($pin->getLikes() as $like) {
-            if ($like->getUser() === $this->getUser()) {
-                $likeRepository->deleteLikeById($like->getId());
-                // $LikeCount = count($pin->getLikes() );
-                // return $this->json(["count"=>$LikeCount,'status'=>'like'],200);
-                return $this->redirectToRoute('app_show_pin',['id'=>$pin->getId()]);
-            }
+
+        if ($likeService->LikeManager($pin,$this->getUser())) {
+            return $this->redirectToRoute('app_show_pin',['id'=>$pin->getId()]);
+        }else{
+            
         }
-         $like = new Like;
-         $like->setPin($pin)
-            ->setUser($this->getUser())
-            ->setCreatedAt( new \DateTime)
-            ->setUpdatedAt( new \DateTime);
-        $em->persist($like);
-        $em->flush();
-        
-        // $LikeCount = count($pin->getLikes());
-        // return $this->json(["count"=>$LikeCount,'status'=>'dislike'],200);
-        return $this->redirectToRoute('app_show_pin',['id'=>$pin->getId()]);
+
     }
 
     /**

@@ -63,6 +63,11 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $profile;
+
     public function __construct()
     {
         $this->pins = new ArrayCollection();
@@ -248,6 +253,23 @@ class User implements UserInterface
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(Profile $profile): self
+    {
+        $this->profile = $profile;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $profile->getUser()) {
+            $profile->setUser($this);
         }
 
         return $this;
