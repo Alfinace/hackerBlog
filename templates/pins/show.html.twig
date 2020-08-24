@@ -22,11 +22,10 @@
 					{% endif %}
 					<img class="w-100 " src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="400px" height="auto">
 					<div class="pl-2 mb-3 text-center">
-						<div class="col-12 mt-5">
+						<div class=" mt-5">
 							<p class=" text-left">{{ pin.description }}</p>
 							<div class="">
-								<span class="float-left text-primary ">
-									{{ pin.likes | length }}
+								<span class="float-left text-primary">
 									{% if app.user %}
 										<a href="{{ path('app_delete_like',{id : pin.id}) }}">
 										{% endif %}
@@ -40,6 +39,7 @@
 										{% if app.user %}
 										</a>
 									{% endif %}
+									{{ pin.likes | length }}
 								</span>
 								<span class="float-right">
 									<i class="fas fa-comment fa-lg fa-fw"></i>

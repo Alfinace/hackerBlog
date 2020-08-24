@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-04 23:30:31
- * @LastEditTime: 2020-08-23 15:36:58
+ * @LastEditTime: 2020-08-24 22:06:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cours-symfony-container/src/Controller/PinsController.php
@@ -177,10 +177,7 @@ class PinController extends AbstractController
 
         if ($likeService->LikeManager($pin,$this->getUser())) {
             return $this->redirectToRoute('app_show_pin',['id'=>$pin->getId()]);
-        }else{
-            
         }
-
     }
 
     /**

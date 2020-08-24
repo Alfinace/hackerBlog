@@ -1,17 +1,23 @@
-<nav class="navbar navbar-expand-xl navbar-primary bg-primary  mb-5 shadow">
-	<div class="container">
-		<a class="navbar-brand text-light font-weight-bold" href="{{ path('app_index_pin') }}">Panterest</a>
-		<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-align-justify fa-2x fa-fw"></i></button>
+<nav class="navbar navbar-expand-xl navbar-primary bg-dark  mb-5 shadow">
+	<div class="container-fluid">
+		<a class="navbar-brand text-light font-weight-bold" href="{{ path('app_index_pin') }}">Hacker</>Blog</a>
+		<button class="navbar-toggler d-lg-none" 
+			type="button" data-toggle="collapse" 
+			data-target="#collapsibleNavId" 
+			aria-controls="collapsibleNavId" 
+			aria-expanded="false" aria-label="Toggle navigation">
+		<i class=" text-light fas fa-align-justify fa-2x fa-fw"></i></button>
 		<div class="collapse  navbar-collapse" id="collapsibleNavId">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
 				{% if app.user %}
-					<a class="nav-link" href="{{ path('app_create_pin') }}">New pin</a>
+					<a class="nav-link" href="{{ path('app_create_pin') }}">New post</a>
 				{% endif %}
 				</li>
 				<li class="nav-item">
 				{% if app.user %}
-				<a class="nav-link" href="{{ path('app_create_pin') }}">Setting</a>
+				<a class="nav-link" href="{{ path('app_create_pin') }}">
+				<span> <i class="fa fa-sun-o" aria-hidden="true"></i></span> Setting</a>
 				{% else %}
 					<a class="nav-link" href="{{ path('app_security_registration') }}">New Account</a>
 				{% endif %}

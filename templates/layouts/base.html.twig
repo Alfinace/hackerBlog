@@ -2,27 +2,40 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="AOS - Animate On Scroll library using CSS3">
+		<meta name="keywords" content="AOS, animate on scroll, css3 scroll animations, simple scroll animations">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}hackerBlog
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
 			<link rel="stylesheet" href="{{ asset('app/app.css') }}">
 			<link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('bootstrap/dist/aos.css') }}">
 		{% endblock %}
 	</head>
 	<body>
 
 		{% include "layouts/partials/_flash_message.html.twig" %}
 		{% include "layouts/partials/_nav.html.twig" %}
-		<main role="main" class="container"> {% block body %}{% endblock %}
-			</main>
+		<main role="main" class="container-fluid" data-aos="fade-zoom-in" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="600"> 
+		{% block body %}{% endblock %}
+		</main>
 			{% include "layouts/partials/_footer.html.twig" %}
 			{% block javascripts %}
-				<script src="{{ asset('app/app.js') }}"></script>
 				<script src="{{ asset('app/jquery.js') }}"></script>
 				<script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
+				<script src="{{ asset('app/app.js') }}"></script>
+				<script src="{{ asset('bootstrap/dist/aos.js') }}"></script>
+				<script>
+				  AOS.init({
+					offset: 200,
+					duration: 600,
+					easing: 'ease-in-out-quart',
+					delay: 200,
+				});
 				</script>
 			{% endblock %}
 		</body>
