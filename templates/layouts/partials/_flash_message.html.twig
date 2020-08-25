@@ -1,0 +1,7 @@
+{% for type, messages in app.flashes %}
+	{% for message in messages %}
+		<div class=" bg-{{ type }} pt-2 pb-2 text-light text-center flash-message" role="alert">
+			<span>{{ message }}</span>
+		</div>
+	{% endfor %}
+{% endfor %}

@@ -1,0 +1,14 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title 'edit pin' %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-6 mx-auto">
+				<h3>Edit Pin</h3>
+				{{ include('pins/_form.html.twig',{'form':form,'textBtnUpdate':'Update'}) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

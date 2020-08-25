@@ -18,3 +18,8 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+### custom ###
+/public/images/
+/public/uploads/
+### end custom ###

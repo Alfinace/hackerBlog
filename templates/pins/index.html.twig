@@ -1,0 +1,61 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}{{ parent() }} | Actualité
+{% endblock %}
+{% block body %}
+	<div class="container">
+	<span class="hero__scroll aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="800">
+				Scroll down <br>
+				<i class="chevron bottom"></i>
+			</span>
+		<h3 class="text-center">{{ plusiraze(pins|length ,"Pin","Pins") }}</h3>
+		{% for row in pins | batch(4) %}
+			<div class="row mt-3">
+				{% for pin in row %}
+					<div class="col-xl-3 zoom-out-up ">
+						<article class="bg-light rounded shadow" style="font-size:10px">
+							<div class="mw-100 overflow-hidden">
+								<a href="{{ path('app_show_pin',{'id':pin.id}) }}">
+									<img class="w-100 img" src="{{ pin.imageName ? asset('uploads/images/'~ pin.imageName) : asset('images/defaultImage.png') }}" alt="" width="200px" height="auto">
+								</a>
+							</div>
+							<a class="h4" href="{{ path('app_show_pin',{'id':pin.id}) }}">{{ pin.title }}</a>
+							<p class="card-text ">{{ pin.description | shortly }}</p>
+							<p>@Author :
+								<a href="mailto:{{ pin.user.email ?? '' }}">{{ pin.user.email ?? 'undefined' }}</a>
+							</p>
+							<p class="text-muted font-italic">Submitted by:
+								{{ pin.createdAt|date }}</p>
+							<hr>
+							<span class="ml-3 text-primary "> 
+								{% if app.user %}
+									<a href="{{ path('app_delete_like',{id : pin.id}) }}" id="linkLike">
+								{% endif %}
+								{% if app.user and pin.isLikedUser(app.user) %}
+									<span class="font-weight-bolder">
+										<i class="fas fa-thumbs-down fa-lg fa-fw text-danger "></i>
+									</span>
+								{% else %}
+									<i class="fas fa-thumbs-up fa-lg fa-fw"></i>
+								{% endif %}
+								{% if app.user %}
+									</a>
+								{% endif %}
+								{{ pin.likes | length }}
+							</span>
+							<span class="float-right">
+								<i class="fas fa-comment fa-lg fa-fw"></i>
+								{{ pin.comments | length }} Comments	
+							</span>
+							<hr>
+						</article>
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
+
