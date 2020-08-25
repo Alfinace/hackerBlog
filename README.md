@@ -7,5 +7,3 @@
 5. Lancez les migrations en tapant `php bin/console doctrine:migrations:migrate`
 6. Lancez les fixtures en tapant `php bin/console doctrine:fixtures:load`
 7. Lancez le serveur avec `php bin/console server:run`
-
-Installez vous et suivez le cours ;)
